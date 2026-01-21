@@ -35,6 +35,41 @@ def get_books():
 def get_books_by_author(author_slug):
     return jsonify(get_books_by_author_name(author_slug))
 
+# GET /api/v1/books/title - returns a list of all books with the given title
+
+@app.route('/api/v1/books/search/title', methods=['GET'])
+def search_books_by_title():
+    title_query = request.args.get('q', '').strip()
+    
+    if not title_query:
+        return jsonify([]), 400
+
+    conn = sqlite3.connect('db.sqlite')
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute("""
+            SELECT id, title, author, author_bio
+            FROM book
+            WHERE LOWER(title) LIKE LOWER(?)
+        """, (f'%{title_query}%',))
+        
+        books = cursor.fetchall()
+        
+        book_list = [{
+            "id": book[0],
+            "title": book[1],
+            "author": book[2],
+            "author_bio": book[3]
+            } for book in books]
+        
+        return jsonify(book_list)
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        conn.close()
+        
 # GET /api/v1/books/subject/<subject_slug> - returns a list of all books by the given subject
 
 
@@ -67,6 +102,11 @@ def create_book():
 
     return jsonify(create_new_book(book_data))
 
+# DELETE /api/v1/books/<book_id> - deletes a book by its ID
+
+@app.route('/api/v1/books/<int:book_id>', methods=['DELETE'])
+def delete_book(book_id):
+    return jsonify(delete_book_by_id(book_id))
 
 def get_all_books(page=1, page_size=10):
     conn = sqlite3.connect('db.sqlite')
@@ -153,7 +193,6 @@ def get_books_by_author_name(author_slug):
     # Return the books as a JSON response
     return book_list
 
-
 def get_books_by_subject():
     conn = sqlite3.connect('db.sqlite')
     cursor = conn.cursor()
@@ -230,6 +269,22 @@ def create_new_book(book_data):
     # Return a message to the user
     return {'message': 'Book created successfully.'}, 201
 
+def delete_book_by_id(book_id):
+    conn = sqlite3.connect('db.sqlite')
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT id FROM book WHERE id = ?;', (book_id,))
+    book = cursor.fetchone()
+    
+    if not book:
+        conn.close()
+        return {'message': 'Book not found.'}, 404
+    
+    cursor.execute('DELETE FROM book WHERE id = ?;', (book_id,))
+    conn.commit()
+    conn.close()
+    
+    return {'message': 'Book deleted successfully.'}, 200
 
 # # GET /api/v1/books
 # @app.route("/api/v1/books", methods=["GET"])
