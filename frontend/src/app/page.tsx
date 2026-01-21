@@ -1,7 +1,5 @@
-export default function Home() {
-  return (
-    <div>
-      <h1>Book</h1>
-    </div>
-  );
+import BookGrid from "@/components/bookGrid";
+
+export default async function Home() {
+  return <BookGrid />;
 }

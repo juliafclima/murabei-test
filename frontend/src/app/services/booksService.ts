@@ -1,8 +1,8 @@
-import { Book } from "../types/book";
+import { Book, BookResponse } from "../types/book";
 import { api } from "./api";
 
 export const getBooks = async ({ page, page_size }: { page: number; page_size: number }) => {
-  return await api<Book[]>("/api/v1/books", {
+  return await api<BookResponse[]>("/api/v1/books", {
     params: { page, page_size }
   });
 };
