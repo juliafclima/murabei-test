@@ -8,7 +8,9 @@ export const getBooks = async ({ page, page_size }: { page: number; page_size: n
 };
 
 export const searchBooksByTitle = async (title: string) => {
-   // TO DO
+   return await api<Book[]>("/api/v1/books/search/title", {
+    params: { q: title }
+  });
 };
 
 export const searchBooksByAuthor = async (author: string) => {
@@ -23,5 +25,5 @@ export const createBook = async (bookData: Book) => {
 };
 
 export const deleteBook = async (bookId: string) => {
-   // TO DO
+   return await api<Book[]>(`/api/v1/books/${bookId}`)
 };
