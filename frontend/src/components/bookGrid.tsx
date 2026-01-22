@@ -1,28 +1,36 @@
 "use client";
 
-import { BookResponse } from "@/app/types/book";
 import { useEffect, useState } from "react";
+
 import PaginationComponent from "./paginationContainer";
 import { getBooks } from "@/app/services/booksService";
 import BookCard from "./bookCard";
+import { useBooks } from "@/app/context/bookContext";
+import { toast } from "sonner";
 
 export default function BookGrid() {
-   const [books, setBooks] = useState<Array<BookResponse>>([]);
-   const [currentPage, setCurrentPage] = useState(1);
+   const { setBooks, books, setAllBooks } = useBooks();
 
-   const itemsPerPage = 30;
+   const [currentPage, setCurrentPage] = useState(1);
 
    useEffect(() => {
       async function fetchBooks() {
-         const data = await getBooks({ page: 1, page_size: 500 });
-         setBooks(data);
+         try {
+            const data = await getBooks({ page: 1, page_size: 500 });
+            setBooks(data);
+            setAllBooks(data);
+         } catch {
+            toast.error("Error loading book data");
+         }
       }
 
       fetchBooks();
-   });
 
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
+
+   const itemsPerPage = 20;
    const totalPages = Math.max(1, Math.ceil(books.length / itemsPerPage));
-
    const indexOfLastItem = currentPage * itemsPerPage;
    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
    const currentBooks = books.slice(indexOfFirstItem, indexOfLastItem);
@@ -41,6 +49,11 @@ export default function BookGrid() {
                   <BookCard book={book} />
                </div>
             ))}
+            {!currentBooks.length && (
+               <div className="flex flex-col items-center justify-center min-h-[30vh] w-full">
+                  <p className="opacity-50 text-lg font-medium">No data was found</p>
+               </div>
+            )}
          </div>
       </>
    );
