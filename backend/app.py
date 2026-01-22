@@ -31,9 +31,38 @@ def get_books():
 # GET /api/v1/books/author/<author> - returns a list of all books by the given author
 
 
-@app.route('/api/v1/books/author/<author_slug>', methods=['GET'])
-def get_books_by_author(author_slug):
-    return jsonify(get_books_by_author_name(author_slug))
+@app.route('/api/v1/books/search/author', methods=['GET'])
+def search_books_by_author():
+    author_query = request.args.get('q', '').strip()
+    
+    if not author_query:
+        return jsonify([]), 400
+
+    conn = sqlite3.connect('db.sqlite')
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute("""
+            SELECT id, title, author, author_bio
+            FROM book
+            WHERE LOWER(author) LIKE LOWER(?)
+        """, (f'%{author_query}%',))
+        
+        books = cursor.fetchall()
+        
+        book_list = [{
+            "id": book[0],
+            "title": book[1],
+            "author": book[2],
+            "author_bio": book[3]
+            } for book in books]
+        
+        return jsonify(book_list)
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        conn.close()
 
 # GET /api/v1/books/title - returns a list of all books with the given title
 
@@ -161,37 +190,6 @@ def get_authors():
 
     # Return the authors as a JSON response
     return author_list
-
-
-def get_books_by_author_name(author_slug):
-    conn = sqlite3.connect('db.sqlite')
-    cursor = conn.cursor()
-
-    # Execute a SELECT query to fetch all books by the given author
-    cursor.execute(
-        'SELECT * FROM book WHERE author_slug = ?;', (author_slug,))
-    books = cursor.fetchall()
-
-    # Convert the books data to a list of dictionaries
-    book_list = []
-
-    for book in books:
-        book_dict = {
-            'id': book[0],
-            'title': book[1],
-            'author': book[2],
-            'biography': book[4],
-            'authors': book[5],
-            'publisher': book[12],
-            'synopsis': book[21],
-        }
-        book_list.append(book_dict)
-
-    # Close the database connection
-    conn.close()
-
-    # Return the books as a JSON response
-    return book_list
 
 def get_books_by_subject():
     conn = sqlite3.connect('db.sqlite')
