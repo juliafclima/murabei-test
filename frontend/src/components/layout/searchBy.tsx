@@ -10,7 +10,6 @@ import {
 } from "@/app/services/booksService";
 import { useBooks } from "@/app/context/bookContext";
 import { BookResponse } from "@/app/types/book";
-import { formatterAuthorNome } from "@/app/util/formatterAuthorName";
 import { toast } from "sonner";
 
 export default function SearchBy() {
@@ -41,7 +40,7 @@ export default function SearchBy() {
          }
 
          if (author) {
-            results = await searchBooksByAuthor(formatterAuthorNome(author));
+            results = await searchBooksByAuthor(author);
          }
 
          setBooks(results);
