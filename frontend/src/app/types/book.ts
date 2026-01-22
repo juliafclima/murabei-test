@@ -15,3 +15,8 @@ export interface BookResponse {
   author: string;
   biography: string;
 }
+
+export interface BookDelete {
+  id: string;
+  title: string;
+}

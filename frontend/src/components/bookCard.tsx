@@ -3,10 +3,12 @@ import { BookResponse } from "@/app/types/book";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Separator } from "./ui/separator";
+import ModalDeleteBook from "./modalDeleteBook";
 
 export default function BookCard({ book }: { book: BookResponse }) {
    return (
       <Card className="h-auto border-none shadow-none bg-stone-100">
+         {<ModalDeleteBook id={book.id} title={book.title} />}
          <CardHeader
             className={cn(
                "text-center",

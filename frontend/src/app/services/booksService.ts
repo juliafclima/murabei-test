@@ -20,7 +20,7 @@ export const searchBooksByTitle = async (title: string) => {
 };
 
 export const searchBooksByAuthor = async (author: string) => {
-   return await api<Book[]>("/api/v1/books/search/author", {
+  return await api<Book[]>("/api/v1/books/search/author", {
     params: { q: author },
   });
 };
@@ -30,8 +30,4 @@ export const createBook = async (bookData: Book) => {
     method: "POST",
     body: JSON.stringify(bookData),
   });
-};
-
-export const deleteBook = async (bookId: string) => {
-  return await api<Book[]>(`/api/v1/books/${bookId}`);
 };
