@@ -12,6 +12,20 @@ export default function BookGrid() {
    const { setBooks, books, setAllBooks } = useBooks();
 
    const [currentPage, setCurrentPage] = useState(1);
+   const [itemsPerPage, setItemsPerPage] = useState(20);
+
+   useEffect(() => {
+      function handleResize() {
+         if (window.innerWidth < 640) setItemsPerPage(6);
+         else if (window.innerWidth < 1024) setItemsPerPage(12);
+         else setItemsPerPage(20);
+      }
+
+      handleResize();
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+   }, [])
+
 
    useEffect(() => {
       async function fetchBooks() {
@@ -29,7 +43,6 @@ export default function BookGrid() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
-   const itemsPerPage = 20;
    const totalPages = Math.max(1, Math.ceil(books.length / itemsPerPage));
    const indexOfLastItem = currentPage * itemsPerPage;
    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
