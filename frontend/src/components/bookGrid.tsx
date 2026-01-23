@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import PaginationComponent from "./paginationContainer";
@@ -13,6 +13,17 @@ export default function BookGrid() {
 
    const [currentPage, setCurrentPage] = useState(1);
    const [itemsPerPage, setItemsPerPage] = useState(20);
+
+   const totalPages = useMemo(() => {
+      if (!books.length) return 1;
+      return Math.ceil(books.length / itemsPerPage);
+   }, [books.length, itemsPerPage])
+
+   useEffect(() => {
+      if (currentPage > totalPages) {
+         setCurrentPage(totalPages);
+      }
+   }, [totalPages, currentPage]);
 
    useEffect(() => {
       function handleResize() {
@@ -43,7 +54,6 @@ export default function BookGrid() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
-   const totalPages = Math.max(1, Math.ceil(books.length / itemsPerPage));
    const indexOfLastItem = currentPage * itemsPerPage;
    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
    const currentBooks = books.slice(indexOfFirstItem, indexOfLastItem);
