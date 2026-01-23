@@ -1,3 +1,5 @@
+"use server"
+
 import { api } from "./api";
 
 import { Book, BookResponse } from "../types/book";

@@ -1,4 +1,6 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+"use server"
+
+const API_BASE_URL = process.env.API_URL;
 
 type FetchOptions = RequestInit & {
   params?: Record<string, string | number>;
