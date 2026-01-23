@@ -52,7 +52,7 @@ export default function SearchBy() {
    };
 
    return (
-      <nav className="flex items-center gap-4">
+      <nav className="flex flex-col gap-4 md:flex-row md:items-center">
          <Input
             type="search"
             placeholder="Search by title"
@@ -74,17 +74,22 @@ export default function SearchBy() {
             }}
          />
 
-         <Button
-            variant="outline"
-            size="sm"
-            className="rounded-full shrink-0"
-            onClick={handleSearch}
-         >
-            Search
-         </Button>
-         <Link href="/new-book">
-            <Button>New book</Button>
-         </Link>
+         <div className="flex flex-col gap-2 md:flex-row md:items-center">
+            <Button
+               variant="outline"
+               size="sm"
+               className="rounded-full shrink-0"
+               onClick={handleSearch}
+            >
+               Search
+            </Button>
+
+            <Link href="/new-book" className="flex-1">
+               <Button className="w-full rounded-full">
+                  New book
+               </Button>
+            </Link>
+         </div>
       </nav>
    );
 }
