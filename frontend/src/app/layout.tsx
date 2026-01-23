@@ -15,18 +15,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("min-h-screen bg-background font-sans antialiased")}>
+      <body className={cn("bg-background font-sans antialiased")}>
         <Toaster />
         <div className="flex min-h-screen flex-col">
           <BookProvider>
             <Header />
 
-            <main className="flex-1 container mx-auto px-4 py-6">
+            <main className="container mx-auto flex-1 px-4 py-6">
               {children}
             </main>
           </BookProvider>
-          <Footer />
         </div>
+
+        <Footer />
       </body>
     </html>
   );
