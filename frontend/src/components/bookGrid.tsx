@@ -7,9 +7,10 @@ import PaginationComponent from "./paginationContainer";
 import { getBooks } from "@/app/services/booksService";
 import BookCard from "./bookCard";
 import { useBooks } from "@/app/context/bookContext";
+import Loading from "./loading";
 
 export default function BookGrid() {
-   const { setBooks, books, setAllBooks } = useBooks();
+   const { setBooks, books, setAllBooks, setIsLoading, isLoading } = useBooks();
 
    const [currentPage, setCurrentPage] = useState(1);
    const [itemsPerPage, setItemsPerPage] = useState(20);
@@ -41,11 +42,14 @@ export default function BookGrid() {
    useEffect(() => {
       async function fetchBooks() {
          try {
+            setIsLoading(true);
             const data = await getBooks({ page: 1, page_size: 500 });
             setBooks(data);
             setAllBooks(data);
          } catch {
             toast.error("Error loading book data");
+         } finally {
+            setIsLoading(false);
          }
       }
 
@@ -53,6 +57,10 @@ export default function BookGrid() {
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
+
+   if (isLoading) {
+      <Loading />
+   }
 
    const indexOfLastItem = currentPage * itemsPerPage;
    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -72,7 +80,7 @@ export default function BookGrid() {
                   <BookCard book={book} />
                </div>
             ))}
-            {!currentBooks.length && (
+            {!isLoading && currentBooks.length === 0 && (
                <div className="flex flex-col items-center justify-center min-h-[30vh] w-full">
                   <p className="opacity-50 text-lg font-medium">No data was found</p>
                </div>

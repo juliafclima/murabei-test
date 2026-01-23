@@ -13,12 +13,13 @@ import {
 } from "@/app/services/booksService";
 import { useBooks } from "@/app/context/bookContext";
 import { BookResponse } from "@/app/types/book";
+import Loading from "../loading";
 
 export default function SearchBy() {
    const [title, setTitle] = useState("");
    const [author, setAuthor] = useState("");
 
-   const { setBooks, allBooks } = useBooks();
+   const { setBooks, allBooks, isLoading, setIsLoading } = useBooks();
 
    useEffect(() => {
       if (!title && !author) {
@@ -35,6 +36,7 @@ export default function SearchBy() {
             return;
          }
 
+         setIsLoading(true);
          let results: BookResponse[] = [];
 
          if (title) {
@@ -48,8 +50,14 @@ export default function SearchBy() {
          setBooks(results);
       } catch {
          toast.error("Error retrieving data");
+      } finally {
+         setIsLoading(false);
       }
    };
+
+   if (isLoading) {
+      <Loading />
+   }
 
    return (
       <nav className="flex flex-col gap-4 md:flex-row md:items-center">

@@ -9,7 +9,7 @@ type ActionState = {
   message: string;
 } | null;
 
-export async function addBook(
+export async function createBook(
   _prevState: ActionState,
   formData: FormData,
 ): Promise<ActionState> {
@@ -18,9 +18,9 @@ export async function addBook(
     author: formData.get("author"),
     author_slug: formData.get("author"),
     author_bio: formData.get("author_bio"),
-    authors:'',
-    publisher: '',
-    synopsis: ''
+    authors: "",
+    publisher: "",
+    synopsis: "",
   };
 
   try {

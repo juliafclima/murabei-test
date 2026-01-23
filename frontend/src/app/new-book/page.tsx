@@ -15,10 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { addBook } from "../actions/addBook";
+import { createBook } from "../actions/createBook";
 
 export default function NewBook() {
-  const [state, formAction, isPending] = useActionState(addBook, null);
+  const [state, formAction, isPending] = useActionState(createBook, null);
 
   const router = useRouter();
 

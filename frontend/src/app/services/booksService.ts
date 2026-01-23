@@ -27,10 +27,3 @@ export const searchBooksByAuthor = async (author: string) => {
     params: { q: author },
   });
 };
-
-export const createBook = async (bookData: Book) => {
-  return await api<Book>("/api/v1/books", {
-    method: "POST",
-    body: JSON.stringify(bookData),
-  });
-};
