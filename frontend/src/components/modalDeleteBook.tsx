@@ -1,6 +1,6 @@
-import { deleteBookAction } from "@/app/actions/deleteBook";
-import { useBooks } from "@/app/context/bookContext";
-import { BookDelete } from "@/app/types/book";
+import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
+
 import {
    AlertDialog,
    AlertDialogAction,
@@ -13,9 +13,11 @@ import {
    AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
-import { toast } from "sonner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+
+import { deleteBookAction } from "@/app/actions/deleteBook";
+import { useBooks } from "@/app/context/bookContext";
+import { BookDelete } from "@/app/types/book";
 
 export default function ModalDeleteBook({ id, title }: BookDelete) {
    const { setBooks } = useBooks();

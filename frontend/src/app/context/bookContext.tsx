@@ -1,13 +1,14 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode, Dispatch, SetStateAction } from "react";
+
 import { BookResponse } from "../types/book";
 
 interface BookContextData {
    books: BookResponse[];
-   setBooks: Dispatch<SetStateAction<BookResponse[]>>; // ✅
+   setBooks: Dispatch<SetStateAction<BookResponse[]>>; 
    allBooks: BookResponse[];
-   setAllBooks: Dispatch<SetStateAction<BookResponse[]>>; // ✅
+   setAllBooks: Dispatch<SetStateAction<BookResponse[]>>;
 }
 
 const BookContext = createContext<BookContextData>({} as BookContextData);

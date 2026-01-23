@@ -1,5 +1,6 @@
-import { Book, BookResponse } from "../types/book";
 import { api } from "./api";
+
+import { Book, BookResponse } from "../types/book";
 
 export const getBooks = async ({
   page,

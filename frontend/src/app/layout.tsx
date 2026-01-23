@@ -1,9 +1,12 @@
 import "./globals.css";
+
 import { cn } from "@/lib/utils";
+
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import { BookProvider } from "./context/bookContext";
 import { Toaster } from "@/components/ui/sonner";
+
+import { BookProvider } from "./context/bookContext";
 
 export default function RootLayout({
   children,

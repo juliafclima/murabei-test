@@ -1,9 +1,10 @@
-import { BookResponse } from "@/app/types/book";
-
 import { cn } from "@/lib/utils";
+
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Separator } from "./ui/separator";
+
 import ModalDeleteBook from "./modalDeleteBook";
+import { BookResponse } from "@/app/types/book";
 
 export default function BookCard({ book }: { book: BookResponse }) {
    return (

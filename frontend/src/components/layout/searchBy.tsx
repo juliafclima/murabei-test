@@ -1,16 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import Link from "next/link";
 
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+
 import {
    searchBooksByAuthor,
    searchBooksByTitle,
 } from "@/app/services/booksService";
 import { useBooks } from "@/app/context/bookContext";
 import { BookResponse } from "@/app/types/book";
-import { toast } from "sonner";
 
 export default function SearchBy() {
    const [title, setTitle] = useState("");
@@ -80,6 +82,9 @@ export default function SearchBy() {
          >
             Search
          </Button>
+         <Link href="/new-book">
+            <Button>New book</Button>
+         </Link>
       </nav>
    );
 }
