@@ -37,18 +37,19 @@ export default function ModalDeleteBook({ id, title }: BookDelete) {
    return (
       <div className="flex justify-end pr-4">
          <AlertDialog>
-            <AlertDialogTrigger asChild>
-               <Tooltip>
+            <Tooltip>
+               <AlertDialogTrigger asChild>
                   <TooltipTrigger asChild>
                      <Button variant="ghost" size="icon">
                         <Trash2 className="h-4 w-4 text-destructive" />
                      </Button>
                   </TooltipTrigger>
-                  <TooltipContent>
-                     <p>Delete book</p>
-                  </TooltipContent>
-               </Tooltip>
-            </AlertDialogTrigger>
+               </AlertDialogTrigger>
+
+               <TooltipContent>
+                  <p>Delete book</p>
+               </TooltipContent>
+            </Tooltip>
 
             <AlertDialogContent>
                <AlertDialogHeader>
@@ -70,6 +71,7 @@ export default function ModalDeleteBook({ id, title }: BookDelete) {
                </AlertDialogFooter>
             </AlertDialogContent>
          </AlertDialog>
+
       </div>
    );
 }
