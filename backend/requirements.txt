@@ -13,3 +13,4 @@ Werkzeug==3.0.2
 wheel==0.43.0
 zipp==3.18.1
 psycopg2-binary==2.9.3
+gunicorn==21.2.0

@@ -9,10 +9,10 @@ ENV PYTHONDONTWRITEBYTECODE 1
 WORKDIR /app
 
 # Copy the requirements file to the working directory
-COPY requirements.txt requirements.txt
+COPY requirements.txt .
 
 # Install the dependencies
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code to the working directory
 COPY . .
@@ -23,4 +23,7 @@ EXPOSE 5000
 # ...
 
 # Run the Flask development server
-CMD ["flask", "--app", "app", "run", "--host=0.0.0.0"]
+# CMD ["flask", "--app", "app", "run", "--host=0.0.0.0"]
+
+# Run the Flask prod server
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
