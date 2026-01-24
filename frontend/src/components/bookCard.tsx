@@ -5,8 +5,11 @@ import { Separator } from "./ui/separator";
 
 import ModalDeleteBook from "./modalDeleteBook";
 import { BookResponse } from "@/app/types/book";
+import { useState } from "react";
 
 export default function BookCard({ book }: { book: BookResponse }) {
+   const [showMore, setShowMore] = useState(false);
+
    return (
       <Card className="h-auto border-none shadow-none bg-stone-100">
          {<ModalDeleteBook id={book.id} title={book.title} />}
@@ -28,8 +31,8 @@ export default function BookCard({ book }: { book: BookResponse }) {
             </div>
          </CardHeader>
 
-         {book.biography && (
-            <CardContent className="prose prose-stone prose-p:my-3 mx-auto px-4 pb-5 pt-0">
+        {book.biography && (
+            <CardContent className="prose prose-stone mx-auto px-4 pb-5 pt-0">
                <div className="flex justify-center py-2">
                   <Separator className="w-16 bg-stone-300" />
                </div>
@@ -39,9 +42,21 @@ export default function BookCard({ book }: { book: BookResponse }) {
                </span>
 
                <div
-                  className="book-biography leading-relaxed text-lg italic text-stone-700 text-justify"
+                  className={cn(
+                     "book-biography leading-relaxed text-lg italic text-stone-700 text-justify transition-all",
+                     !showMore && "line-clamp-4",
+                  )}
                   dangerouslySetInnerHTML={{ __html: book.biography }}
                />
+
+               <div className="mt-3 text-center">
+                  <button
+                     onClick={() => setShowMore((prev) => !prev)}
+                     className="text-sm font-medium text-stone-600 hover:text-stone-900 underline underline-offset-4"
+                  >
+                     {showMore ? "Show less" : "Show more"}
+                  </button>
+               </div>
             </CardContent>
          )}
       </Card>
