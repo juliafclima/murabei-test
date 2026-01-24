@@ -1,4 +1,4 @@
-import { Trash2 } from "lucide-react";
+import { CircleX, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import {
@@ -61,12 +61,12 @@ export default function ModalDeleteBook({ id, title }: BookDelete) {
                </AlertDialogHeader>
 
                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel><CircleX className="w-4 h-4" /> Cancel</AlertDialogCancel>
                   <AlertDialogAction
                      onClick={handleDelete}
                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90 text-white"
                   >
-                     Confirm Exclusion
+                     <Trash2 className="w-4 h-4" /> Confirm Exclusion
                   </AlertDialogAction>
                </AlertDialogFooter>
             </AlertDialogContent>

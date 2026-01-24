@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Separator } from "./ui/separator";
@@ -9,6 +10,22 @@ import { useState } from "react";
 
 export default function BookCard({ book }: { book: BookResponse }) {
    const [showMore, setShowMore] = useState(false);
+
+   const more = () => {
+      return (
+         <>
+            <ChevronRight className="h-4 w-4" /> Show more
+         </>
+      )
+   }
+
+   const less = () => {
+      return (
+         <>
+            <ChevronLeft className="h-4 w-4" /> Show less
+         </>
+      )
+   }
 
    return (
       <Card className="h-auto border-none shadow-none bg-stone-100">
@@ -31,7 +48,7 @@ export default function BookCard({ book }: { book: BookResponse }) {
             </div>
          </CardHeader>
 
-        {book.biography && (
+         {book.biography && (
             <CardContent className="prose prose-stone mx-auto px-4 pb-5 pt-0">
                <div className="flex justify-center py-2">
                   <Separator className="w-16 bg-stone-300" />
@@ -49,12 +66,12 @@ export default function BookCard({ book }: { book: BookResponse }) {
                   dangerouslySetInnerHTML={{ __html: book.biography }}
                />
 
-               <div className="mt-3 text-center">
+               <div className="mt-3 flex justify-end">
                   <button
                      onClick={() => setShowMore((prev) => !prev)}
-                     className="text-sm font-medium text-stone-600 hover:text-stone-900 underline underline-offset-4"
+                     className="flex items-center justify-center text-sm font-medium text-stone-600 hover:text-stone-900 underline underline-offset-4"
                   >
-                     {showMore ? "Show less" : "Show more"}
+                     {showMore ? less() : more()}
                   </button>
                </div>
             </CardContent>
