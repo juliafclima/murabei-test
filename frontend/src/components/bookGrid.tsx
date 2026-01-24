@@ -16,8 +16,8 @@ import PaginationComponent from "./paginationContainer";
 import { getBooks } from "@/app/services/booksService";
 import BookCard from "./bookCard";
 import { useBooks } from "@/app/context/bookContext";
-import Loading from "./loading";
 import { cn } from "@/lib/utils";
+import BookCardSkeleton from "./bookCardSkeleton";
 
 export default function BookGrid() {
    const { setBooks, books, setAllBooks, setIsLoading, isLoading } = useBooks();
@@ -25,6 +25,7 @@ export default function BookGrid() {
    const [currentPage, setCurrentPage] = useState(1);
    const [itemsPerPage, setItemsPerPage] = useState(20);
    const [viewMode, setViewMode] = useState("grid")
+   const [isScrolled, setisScrolled] = useState(false);
 
    const totalPages = useMemo(() => {
       if (!books.length) return 1;
@@ -53,13 +54,16 @@ export default function BookGrid() {
    useEffect(() => {
       async function fetchBooks() {
          try {
+            console.log('try')
             setIsLoading(true);
             const data = await getBooks({ page: 1, page_size: 500 });
             setBooks(data);
             setAllBooks(data);
          } catch {
+            console.log("catch")
             toast.error("Error loading book data");
          } finally {
+            console.log('finally')
             setIsLoading(false);
          }
       }
@@ -68,16 +72,6 @@ export default function BookGrid() {
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
-
-   if (isLoading) {
-      <Loading />
-   }
-
-   const indexOfLastItem = currentPage * itemsPerPage;
-   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-   const currentBooks = books.slice(indexOfFirstItem, indexOfLastItem);
-
-   const [isScrolled, setisScrolled] = useState(false);
 
    useEffect(() => {
       const onScroll = () => {
@@ -88,6 +82,13 @@ export default function BookGrid() {
       return () => window.removeEventListener("scroll", onScroll);
    })
 
+   if (isLoading) {
+      return <BookCardSkeleton />
+   }
+
+   const indexOfLastItem = currentPage * itemsPerPage;
+   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+   const currentBooks = books.slice(indexOfFirstItem, indexOfLastItem);
 
    return (
       <>

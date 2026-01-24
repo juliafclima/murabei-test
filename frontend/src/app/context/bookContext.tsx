@@ -18,7 +18,7 @@ const BookContext = createContext<BookContextData>({} as BookContextData);
 export function BookProvider({ children }: { children: ReactNode }) {
    const [books, setBooks] = useState<BookResponse[]>([]);
    const [allBooks, setAllBooks] = useState<BookResponse[]>([]);
-   const [isLoading, setIsLoading] = useState(false)
+   const [isLoading, setIsLoading] = useState(true)
 
    return (
       <BookContext.Provider value={{ books, setBooks, allBooks, setAllBooks, isLoading, setIsLoading }}>
