@@ -78,11 +78,16 @@ export default function BookGrid() {
 
    return (
       <>
-         <PaginationComponent
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-         />
+         <div className="sticky top-[65px] z-20 py-4">
+            <PaginationComponent
+               currentPage={currentPage}
+               totalPages={totalPages}
+               onPageChange={(page) => {
+                  setCurrentPage(page);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+               }}
+            />
+         </div>
 
          <div className="hidden lg:flex items-center justify-end gap-2 mb-4">
             <TooltipProvider>
@@ -122,8 +127,8 @@ export default function BookGrid() {
 
          <div className={
             viewMode === 'grid'
-               ? "columns-1 lg:columns-2 gap-8"
-               : "flex flex-col gap-4"
+               ? "columns-1 lg:columns-2 gap-8 mb-10"
+               : "flex flex-col gap-4 mb-10"
          }>
             {currentBooks.map((book) => (
                <div key={book.id} className="mb-8 break-inside-avoid">
