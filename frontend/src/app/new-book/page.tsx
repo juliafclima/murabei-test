@@ -41,7 +41,7 @@ export default function NewBook() {
 
         <CardContent>
           <form className="space-y-6" action={formAction}>
-            <FieldGroup className="space-y-4">
+            <FieldGroup >
               <Field>
                 <FieldLabel htmlFor="title">Title *</FieldLabel>
                 <Input
