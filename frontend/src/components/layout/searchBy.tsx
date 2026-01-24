@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
+import { Plus, Search } from "lucide-react";
 
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -86,15 +87,16 @@ export default function SearchBy() {
             <Button
                variant="outline"
                size="sm"
-               className="rounded-full shrink-0"
+               className="rounded-full flex items-center gap-2"
                onClick={handleSearch}
+
             >
-               Search
+               <Search className="h-4 w-4" /> Search
             </Button>
 
             <Link href="/new-book" className="flex-1">
                <Button className="w-full rounded-full">
-                  New book
+                  <Plus className="h-4 w-4" /> New book
                </Button>
             </Link>
          </div>

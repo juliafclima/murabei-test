@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { createBook } from "../actions/createBook";
+import { CircleX, Save } from "lucide-react";
 
 export default function NewBook() {
   const [state, formAction, isPending] = useActionState(createBook, null);
@@ -76,11 +77,11 @@ export default function NewBook() {
               <div className="flex justify-end gap-2 pt-4">
                 <Link href="/">
                   <Button variant="outline" disabled={isPending}>
-                    Cancel
+                   <CircleX className="w-4 h-4" />  Cancel
                   </Button>
                 </Link>
                 <Button type="submit" disabled={isPending}>
-                  {isPending ? "Saving..." : "Save book"}
+                  <Save className="w-4 h-4" />  {isPending ? "Saving..." : "Save book"}
                 </Button>
               </div>
             </FieldGroup>
