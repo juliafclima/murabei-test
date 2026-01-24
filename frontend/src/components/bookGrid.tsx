@@ -2,6 +2,15 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { Grid, Rows } from "lucide-react";
+
+import { Button } from "./ui/button";
+import {
+   Tooltip,
+   TooltipContent,
+   TooltipProvider,
+   TooltipTrigger,
+} from "./ui/tooltip";
 
 import PaginationComponent from "./paginationContainer";
 import { getBooks } from "@/app/services/booksService";
@@ -14,6 +23,7 @@ export default function BookGrid() {
 
    const [currentPage, setCurrentPage] = useState(1);
    const [itemsPerPage, setItemsPerPage] = useState(20);
+   const [viewMode, setViewMode] = useState("grid")
 
    const totalPages = useMemo(() => {
       if (!books.length) return 1;
@@ -74,7 +84,46 @@ export default function BookGrid() {
             onPageChange={setCurrentPage}
          />
 
-         <div className="columns-1 md:columns-2 lg:columns-3 gap-8">
+         <TooltipProvider>
+            <div className="flex items-center justify-end gap-2 mb-4">
+               <span className="text-sm text-muted-foreground mr-2">Show</span>
+
+               <Tooltip>
+                  <TooltipTrigger asChild>
+                     <Button
+                        size="icon"
+                        onClick={() => setViewMode("grid")}
+                     >
+                        <Grid className="h-4 w-4" />
+                     </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                     <p>in grid</p>
+                  </TooltipContent>
+               </Tooltip>
+
+               <Tooltip>
+                  <TooltipTrigger asChild>
+                     <Button
+                        size="icon"
+                        onClick={() => setViewMode("list")}
+                     >
+                        <Rows className="h-4 w-4" />
+                     </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                     <p>in list</p>
+                  </TooltipContent>
+               </Tooltip>
+            </div>
+         </TooltipProvider>
+
+
+         <div className={
+            viewMode === 'grid'
+               ? "columns-1 lg:columns-2 gap-8"
+               : "flex flex-col gap-4"
+         }>
             {currentBooks.map((book) => (
                <div key={book.id} className="mb-8 break-inside-avoid">
                   <BookCard book={book} />

@@ -17,7 +17,7 @@ interface PaginationComponentProps {
 export default function PaginationComponent({
    currentPage,
    totalPages,
-   onPageChange,
+   onPageChange
 }: PaginationComponentProps) {
    return (
       <Pagination>
@@ -36,8 +36,6 @@ export default function PaginationComponent({
                   }
                />
             </PaginationItem>
-
-            <p className="mx-2">{currentPage} / {totalPages}</p>
 
             <PaginationItem>
                <PaginationNext

@@ -28,7 +28,7 @@ export default function BookCard({ book }: { book: BookResponse }) {
    }
 
    return (
-      <Card className="h-auto border-none shadow-none bg-stone-100">
+      <Card className="h-auto border shadow bg-stone-100">
          {<ModalDeleteBook id={book.id} title={book.title} />}
          <CardHeader
             className={cn(
@@ -61,7 +61,7 @@ export default function BookCard({ book }: { book: BookResponse }) {
                <div
                   className={cn(
                      "book-biography leading-relaxed text-lg italic text-stone-700 text-justify transition-all",
-                     !showMore && "line-clamp-4",
+                     !showMore && "line-clamp-1",
                   )}
                   dangerouslySetInnerHTML={{ __html: book.biography }}
                />
