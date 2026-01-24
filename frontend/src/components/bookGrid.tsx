@@ -84,40 +84,41 @@ export default function BookGrid() {
             onPageChange={setCurrentPage}
          />
 
-         <TooltipProvider>
-            <div className="flex items-center justify-end gap-2 mb-4">
-               <span className="text-sm text-muted-foreground mr-2">Show</span>
+         <div className="hidden lg:flex items-center justify-end gap-2 mb-4">
+            <TooltipProvider>
+               <div className="flex items-center justify-end gap-2 mb-4">
+                  <span className="text-sm text-muted-foreground mr-2">Show</span>
 
-               <Tooltip>
-                  <TooltipTrigger asChild>
-                     <Button
-                        size="icon"
-                        onClick={() => setViewMode("grid")}
-                     >
-                        <Grid className="h-4 w-4" />
-                     </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                     <p>in grid</p>
-                  </TooltipContent>
-               </Tooltip>
+                  <Tooltip>
+                     <TooltipTrigger asChild>
+                        <Button
+                           size="icon"
+                           onClick={() => setViewMode("grid")}
+                        >
+                           <Grid className="h-4 w-4" />
+                        </Button>
+                     </TooltipTrigger>
+                     <TooltipContent>
+                        <p>in grid</p>
+                     </TooltipContent>
+                  </Tooltip>
 
-               <Tooltip>
-                  <TooltipTrigger asChild>
-                     <Button
-                        size="icon"
-                        onClick={() => setViewMode("list")}
-                     >
-                        <Rows className="h-4 w-4" />
-                     </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                     <p>in list</p>
-                  </TooltipContent>
-               </Tooltip>
-            </div>
-         </TooltipProvider>
-
+                  <Tooltip>
+                     <TooltipTrigger asChild>
+                        <Button
+                           size="icon"
+                           onClick={() => setViewMode("list")}
+                        >
+                           <Rows className="h-4 w-4" />
+                        </Button>
+                     </TooltipTrigger>
+                     <TooltipContent>
+                        <p>in list</p>
+                     </TooltipContent>
+                  </Tooltip>
+               </div>
+            </TooltipProvider>
+         </div>
 
          <div className={
             viewMode === 'grid'
