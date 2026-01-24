@@ -3,6 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+body {
+  background-color: #948cc94e;
+}
+
 :root {
   margin: 0;
   padding: 0;
