@@ -17,6 +17,7 @@ import { getBooks } from "@/app/services/booksService";
 import BookCard from "./bookCard";
 import { useBooks } from "@/app/context/bookContext";
 import Loading from "./loading";
+import { cn } from "@/lib/utils";
 
 export default function BookGrid() {
    const { setBooks, books, setAllBooks, setIsLoading, isLoading } = useBooks();
@@ -76,9 +77,25 @@ export default function BookGrid() {
    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
    const currentBooks = books.slice(indexOfFirstItem, indexOfLastItem);
 
+   const [isScrolled, setisScrolled] = useState(false);
+
+   useEffect(() => {
+      const onScroll = () => {
+         setisScrolled(window.scrollY > 0);
+      }
+
+      window.addEventListener("scroll", onScroll);
+      return () => window.removeEventListener("scroll", onScroll);
+   })
+
+
    return (
       <>
-         <div className="sticky top-[65px] z-20 py-4">
+         <div className={cn(
+            "sticky z-20 py-4 transition-colors",
+            "top-[235px] lg:top-[65px]",
+            isScrolled ? "bg-background/80 backdrop-blur-sm" : ""
+         )}>
             <PaginationComponent
                currentPage={currentPage}
                totalPages={totalPages}
