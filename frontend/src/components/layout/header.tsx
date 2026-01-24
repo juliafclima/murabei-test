@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 export default function Header() {
    const pathname = usePathname();
-   const isNewBookPage = pathname === "/new-book";
+   const isHome = pathname == "/";
 
    const [isScrolled, setisScrolled] = useState(false);
 
@@ -36,7 +36,7 @@ export default function Header() {
             </Link>
 
             {
-               !isNewBookPage && (
+               isHome && (
                   <SearchBy />
 
                )
